@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+<head>
+  <title>Dashboard</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+</head>
+<body>
+
+<h2>Bible Read – Ranting Labu</h2>
+
+<a href="anggota.html">Edit Nama Anggota</a><br>
+<a href="absen.html">Absen Bible Read</a><br>
+<a href="rekap.html">Rekap Bible Read</a><br>
+
+<button onclick="logout()">Logout</button>
+
+<script src="js/firebase.js"></script>
+<script>
+  function logout() {
+    auth.signOut().then(() => location.href = "index.html");
+  }
+</script>
+</body>
+</html>

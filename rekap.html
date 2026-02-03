@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <title>Rekap Bible Read</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <style>
+    body { font-family: Arial, sans-serif; }
+    table { width: 100%; border-collapse: collapse; margin-top: 12px; }
+    th, td { border: 1px solid #ddd; padding: 8px; text-align: left; }
+    th { background: #f2f2f2; }
+    .full { background: #d4edda; font-weight: bold; }
+  </style>
+</head>
+<body>
+
+<h2>Rekap Bible Read</h2>
+
+<label>Bulan:</label>
+<input type="month" id="bulan">
+
+<button onclick="loadRekap()">🔍 Tampilkan Rekap</button>
+
+<table>
+  <thead>
+    <tr>
+      <th>Nama</th>
+      <th>Jumlah Hadir</th>
+      <th>Status</th>
+    </tr>
+  </thead>
+  <tbody id="rekapBody"></tbody>
+</table>
+
+<!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-firestore-compat.js"></script>
+
+<!-- App JS -->
+<script src="js/firebase.js"></script>
+<script src="js/rekap.js"></script>
+
+</body>
+</html>
