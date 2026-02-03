@@ -41,16 +41,34 @@ function loadAnggota() {
 function loadAbsenTanggal(tanggal) {
   if (!tanggal) return;
 
-  db.collection("absen").doc(tanggal).get().then(doc => {
-    if (!doc.exists) return;
-
-    const hadir = doc.data().hadir || {};
-    Object.keys(hadir).forEach(id => {
-      const cb = document.getElementById(`cb-${id}`);
-      if (cb) cb.checked = hadir[id];
-    });
+  // 1️⃣ Reset semua checkbox (default = kosong)
+  document.querySelectorAll("input[type=checkbox]").forEach(cb => {
+    cb.checked = false;
   });
+
+  // 2️⃣ Ambil data absen sesuai tanggal
+  db.collection("absen").doc(tanggal).get()
+    .then(doc => {
+
+      // jika belum ada data absen di tanggal ini → selesai (semua kosong)
+      if (!doc.exists) return;
+
+      const hadir = doc.data().hadir || {};
+
+      // 3️⃣ Set checkbox SESUAI database
+      Object.entries(hadir).forEach(([anggotaId, status]) => {
+        const cb = document.getElementById(`cb-${anggotaId}`);
+        if (cb) {
+          cb.checked = status === true;
+        }
+      });
+
+    })
+    .catch(err => {
+      alert("Gagal load absen: " + err.message);
+    });
 }
+
 
 // simpan absen
 function simpanAbsen() {
