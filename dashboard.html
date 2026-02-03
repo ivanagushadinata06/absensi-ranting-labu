@@ -56,6 +56,14 @@
       window.location.replace("index.html");
     });
   }
+  
+<script>
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.replace("index.html");
+    }
+  });
+</script>
 
   // 🔒 PROTEKSI DASHBOARD
   auth.onAuthStateChanged(user => {
