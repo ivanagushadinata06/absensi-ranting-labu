@@ -11,11 +11,3 @@ firebase.initializeApp(firebaseConfig);
 
 const auth = firebase.auth();
 const db = firebase.firestore();
- 
-<script>
-  auth.onAuthStateChanged(user => {
-    if (!user) {
-      window.location.replace("index.html");
-    }
-  });
-</script>
