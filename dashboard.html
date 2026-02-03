@@ -51,9 +51,20 @@
 <script src="js/firebase.js"></script>
 <script>
   function logout() {
-    auth.signOut().then(() => location.href = "index.html");
+    auth.signOut().then(() => {
+      // hapus cache halaman
+      window.location.replace("index.html");
+    });
   }
+
+  // 🔒 PROTEKSI DASHBOARD
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.replace("index.html");
+    }
+  });
 </script>
+
 
 </body>
 </html>
