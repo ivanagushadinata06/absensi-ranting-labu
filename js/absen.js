@@ -1,38 +1,39 @@
 const list = document.getElementById("list");
 const tanggalInput = document.getElementById("tanggal");
 
-// set default tanggal hari ini
-const today = new Date().toISOString().slice(0, 10);
-tanggalInput.value = today;
+// default tanggal hari ini
+tanggalInput.value = new Date().toISOString().slice(0, 10);
 
-// render daftar anggota
+// load anggota
 function loadAnggota() {
   db.collection("anggota")
     .where("aktif", "==", true)
-    .onSnapshot(snap => {
+    .onSnapshot(snapshot => {
       list.innerHTML = "";
 
-      if (snap.empty) {
-        list.innerHTML = "<p>Belum ada anggota</p>";
+      if (snapshot.empty) {
+        list.innerHTML = `
+          <tr>
+            <td colspan="2">Belum ada anggota</td>
+          </tr>`;
         return;
       }
 
-      snap.forEach(doc => {
+      snapshot.forEach(doc => {
         const id = doc.id;
         const nama = doc.data().nama;
 
         list.innerHTML += `
-          <div class="item">
-            <input type="checkbox" id="cb-${id}">
-            <label for="cb-${id}">${nama}</label>
-          </div>
+          <tr>
+            <td>${nama}</td>
+            <td>
+              <input type="checkbox" id="cb-${id}">
+            </td>
+          </tr>
         `;
       });
 
-      // setelah render anggota, load absen tanggal terpilih
       loadAbsenTanggal(tanggalInput.value);
-    }, err => {
-      alert("Gagal load anggota: " + err.message);
     });
 }
 
@@ -40,23 +41,22 @@ function loadAnggota() {
 function loadAbsenTanggal(tanggal) {
   if (!tanggal) return;
 
-  db.collection("absen").doc(tanggal).get()
-    .then(doc => {
-      if (!doc.exists) return;
+  db.collection("absen").doc(tanggal).get().then(doc => {
+    if (!doc.exists) return;
 
-      const hadir = doc.data().hadir || {};
-      Object.keys(hadir).forEach(anggotaId => {
-        const cb = document.getElementById(`cb-${anggotaId}`);
-        if (cb) cb.checked = hadir[anggotaId];
-      });
+    const hadir = doc.data().hadir || {};
+    Object.keys(hadir).forEach(id => {
+      const cb = document.getElementById(`cb-${id}`);
+      if (cb) cb.checked = hadir[id];
     });
+  });
 }
 
 // simpan absen
 function simpanAbsen() {
   const tanggal = tanggalInput.value;
   if (!tanggal) {
-    alert("Pilih tanggal dulu");
+    alert("Pilih tanggal terlebih dahulu");
     return;
   }
 
@@ -71,11 +71,11 @@ function simpanAbsen() {
     hadir,
     createdAt: firebase.firestore.FieldValue.serverTimestamp()
   })
-  .then(() => alert("Absen tersimpan ✅"))
+  .then(() => alert("Absen berhasil disimpan ✅"))
   .catch(err => alert(err.message));
 }
 
-// reload absen saat tanggal diganti
+// reload saat tanggal berubah
 tanggalInput.addEventListener("change", e => {
   loadAbsenTanggal(e.target.value);
 });
