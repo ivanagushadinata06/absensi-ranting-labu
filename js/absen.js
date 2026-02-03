@@ -9,9 +9,14 @@ tanggalInput.value = today;
 function loadAnggota() {
   db.collection("anggota")
     .where("aktif", "==", true)
-    .orderBy("createdAt")
     .onSnapshot(snap => {
       list.innerHTML = "";
+
+      if (snap.empty) {
+        list.innerHTML = "<p>Belum ada anggota</p>";
+        return;
+      }
+
       snap.forEach(doc => {
         const id = doc.id;
         const nama = doc.data().nama;
@@ -26,6 +31,8 @@ function loadAnggota() {
 
       // setelah render anggota, load absen tanggal terpilih
       loadAbsenTanggal(tanggalInput.value);
+    }, err => {
+      alert("Gagal load anggota: " + err.message);
     });
 }
 
