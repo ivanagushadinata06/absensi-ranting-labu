@@ -41,6 +41,13 @@
 <!-- App JS -->
 <script src="js/firebase.js"></script>
 <script src="js/anggota.js"></script>
+<script>
+  auth.onAuthStateChanged(user => {
+    if (!user) {
+      window.location.replace("index.html");
+    }
+  });
+</script>
 
 </body>
 </html>
