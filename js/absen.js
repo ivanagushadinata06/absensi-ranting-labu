@@ -4,7 +4,9 @@ const tanggalInput = document.getElementById("tanggal");
 // default tanggal hari ini
 tanggalInput.value = new Date().toISOString().slice(0, 10);
 
-// load anggota
+// =======================
+// LOAD ANGGOTA
+// =======================
 function loadAnggota() {
   db.collection("anggota")
     .where("aktif", "==", true)
@@ -27,7 +29,10 @@ function loadAnggota() {
           <tr>
             <td>${nama}</td>
             <td>
-              <input type="checkbox" id="cb-${id}">
+              <input
+                type="checkbox"
+                id="cb-${id}"
+                onchange="simpanOtomatis('${id}', this.checked)">
             </td>
           </tr>
         `;
@@ -37,63 +42,58 @@ function loadAnggota() {
     });
 }
 
-// load absen berdasarkan tanggal
+// =======================
+// LOAD ABSEN PER TANGGAL
+// =======================
 function loadAbsenTanggal(tanggal) {
   if (!tanggal) return;
 
-  // 1️⃣ Reset semua checkbox (default = kosong)
+  // reset semua checkbox
   document.querySelectorAll("input[type=checkbox]").forEach(cb => {
     cb.checked = false;
   });
 
-  // 2️⃣ Ambil data absen sesuai tanggal
   db.collection("absen").doc(tanggal).get()
     .then(doc => {
-
-      // jika belum ada data absen di tanggal ini → selesai (semua kosong)
       if (!doc.exists) return;
 
       const hadir = doc.data().hadir || {};
-
-      // 3️⃣ Set checkbox SESUAI database
-      Object.entries(hadir).forEach(([anggotaId, status]) => {
-        const cb = document.getElementById(`cb-${anggotaId}`);
-        if (cb) {
-          cb.checked = status === true;
-        }
+      Object.entries(hadir).forEach(([id, status]) => {
+        const cb = document.getElementById(`cb-${id}`);
+        if (cb) cb.checked = status === true;
       });
-
-    })
-    .catch(err => {
-      alert("Gagal load absen: " + err.message);
     });
 }
 
-
-// simpan absen
-function simpanAbsen() {
+// =======================
+// SIMPAN OTOMATIS SAAT CHECKBOX DIUBAH
+// =======================
+function simpanOtomatis(anggotaId, status) {
   const tanggal = tanggalInput.value;
-  if (!tanggal) {
-    alert("Pilih tanggal terlebih dahulu");
-    return;
-  }
+  if (!tanggal) return;
 
-  const hadir = {};
-  document.querySelectorAll("input[type=checkbox]").forEach(cb => {
-    const id = cb.id.replace("cb-", "");
-    hadir[id] = cb.checked;
+  const ref = db.collection("absen").doc(tanggal);
+
+  ref.get().then(doc => {
+    let data = {
+      tanggal,
+      hadir: {},
+      createdAt: firebase.firestore.FieldValue.serverTimestamp()
+    };
+
+    if (doc.exists) {
+      data.hadir = doc.data().hadir || {};
+    }
+
+    data.hadir[anggotaId] = status;
+
+    ref.set(data);
   });
-
-  db.collection("absen").doc(tanggal).set({
-    tanggal,
-    hadir,
-    createdAt: firebase.firestore.FieldValue.serverTimestamp()
-  })
-  .then(() => alert("Absen berhasil disimpan ✅"))
-  .catch(err => alert(err.message));
 }
 
-// reload saat tanggal berubah
+// =======================
+// GANTI TANGGAL
+// =======================
 tanggalInput.addEventListener("change", e => {
   loadAbsenTanggal(e.target.value);
 });
