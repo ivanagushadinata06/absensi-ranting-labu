@@ -1,19 +1,52 @@
 <!DOCTYPE html>
-<html>
+<html lang="id">
 <head>
+  <meta charset="UTF-8">
   <title>Dashboard</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h2>Bible Read – Ranting Labu</h2>
+<div class="container">
 
-<a href="anggota.html">Edit Nama Anggota</a><br>
-<a href="absen.html">Absen Bible Read</a><br>
-<a href="rekap.html">Rekap Bible Read</a><br>
+  <h2>📖 Bible Read<br>Ranting Labu</h2>
 
-<button onclick="logout()">Logout</button>
+  <div class="dashboard-menu">
+
+    <a href="anggota.html" class="menu-card">
+      <div class="icon">👥</div>
+      <div class="text">
+        <h3>Anggota</h3>
+        <p>Tambah, edit, dan hapus nama anggota</p>
+      </div>
+    </a>
+
+    <a href="absen.html" class="menu-card">
+      <div class="icon">☑️</div>
+      <div class="text">
+        <h3>Absen</h3>
+        <p>Absen harian Bible Read</p>
+      </div>
+    </a>
+
+    <a href="rekap.html" class="menu-card">
+      <div class="icon">📊</div>
+      <div class="text">
+        <h3>Rekap</h3>
+        <p>Laporan bulanan & full attendance</p>
+      </div>
+    </a>
+
+  </div>
+
+  <button class="logout" onclick="logout()">Logout</button>
+
+</div>
+
+<!-- Firebase CDN -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-auth-compat.js"></script>
 
 <script src="js/firebase.js"></script>
 <script>
@@ -21,5 +54,6 @@
     auth.signOut().then(() => location.href = "index.html");
   }
 </script>
+
 </body>
 </html>
