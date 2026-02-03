@@ -134,3 +134,32 @@ th {
     grid-template-columns: repeat(3, 1fr);
   }
 }
+
+/* TABEL ABSEN */
+.absen-table {
+  width: 100%;
+  border-collapse: collapse;
+}
+
+.absen-table th,
+.absen-table td {
+  border: 1px solid #ddd;
+  padding: 10px;
+  font-size: 15px;
+}
+
+.absen-table th {
+  background: #f2f2f2;
+  text-align: left;
+}
+
+.absen-table th:last-child,
+.absen-table td:last-child {
+  text-align: center;
+  width: 80px;
+}
+
+.absen-table input[type="checkbox"] {
+  transform: scale(1.3);
+  cursor: pointer;
+}
