@@ -192,3 +192,60 @@ th {
   font-size: 16px;
   cursor: pointer;
 }
+
+/* ===== MOBILE FIX (HP) ===== */
+@media (max-width: 600px) {
+
+  /* Container lebih rapat */
+  .container {
+    padding: 12px;
+  }
+
+  /* Tabel full width & tidak overflow */
+  .anggota-table,
+  .absen-table {
+    width: 100%;
+    font-size: 14px;
+  }
+
+  /* Header tetap terlihat */
+  .anggota-table thead,
+  .absen-table thead {
+    position: sticky;
+    top: 0;
+    background: #f2f2f2;
+    z-index: 2;
+  }
+
+  /* Kolom aksi dipersempit */
+  .anggota-table td:last-child {
+    width: 90px;
+    white-space: nowrap;
+  }
+
+  /* Tombol aksi berjajar rapi */
+  .aksi {
+    display: flex;
+    justify-content: center;
+    gap: 6px;
+  }
+
+  .aksi button {
+    padding: 6px;
+    font-size: 18px;
+    min-width: 40px;
+    min-height: 40px;
+  }
+
+  /* Checkbox absen lebih besar */
+  .absen-table input[type="checkbox"] {
+    transform: scale(1.5);
+  }
+
+  /* Tinggi list bisa discroll */
+  .list {
+    max-height: 65vh;
+    overflow-y: auto;
+  }
+
+}
