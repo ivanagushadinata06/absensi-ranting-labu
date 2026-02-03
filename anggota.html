@@ -12,10 +12,22 @@
 
   <h2>Edit Nama Anggota</h2>
 
-  <input id="nama" placeholder="Nama Anggota">
-  <button onclick="tambah()">Tambah</button>
+  <input id="namaBaru" placeholder="Nama Anggota">
+  <button onclick="tambah()">➕ Tambah Anggota</button>
 
-  <div class="list" id="list"></div>
+  <div class="list">
+    <table class="anggota-table">
+      <thead>
+        <tr>
+          <th>Nama Anggota</th>
+          <th>Aksi</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <!-- data dari JS -->
+      </tbody>
+    </table>
+  </div>
 
   <a href="dashboard.html" class="menu-link">⬅ Kembali ke Dashboard</a>
 
