@@ -4,25 +4,36 @@
   <meta charset="UTF-8">
   <title>Absen Bible Read</title>
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <style>
-    body { font-family: Arial, sans-serif; }
-    #list { max-height: 60vh; overflow-y: auto; border: 1px solid #ddd; padding: 10px; }
-    .item { display: flex; align-items: center; margin-bottom: 8px; }
-    .item label { margin-left: 8px; }
-    button { margin-top: 12px; padding: 10px; width: 100%; }
-  </style>
   <link rel="stylesheet" href="css/style.css">
 </head>
 <body>
 
-<h2>Absen Bible Read</h2>
+<div class="container">
 
-<label>Tanggal:</label>
-<input type="date" id="tanggal">
+  <h2>Absen Bible Read</h2>
 
-<div id="list"></div>
+  <label for="tanggal">Tanggal:</label>
+  <input type="date" id="tanggal">
 
-<button onclick="simpanAbsen()">💾 Simpan Absen</button>
+  <div class="list">
+    <table class="absen-table">
+      <thead>
+        <tr>
+          <th>Nama Anggota</th>
+          <th>Hadir</th>
+        </tr>
+      </thead>
+      <tbody id="list">
+        <!-- data dari JS -->
+      </tbody>
+    </table>
+  </div>
+
+  <button onclick="simpanAbsen()">💾 Simpan Absen</button>
+
+  <a href="dashboard.html" class="menu-link">⬅ Kembali ke Dashboard</a>
+
+</div>
 
 <!-- Firebase CDN -->
 <script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
