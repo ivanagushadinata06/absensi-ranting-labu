@@ -8,14 +8,27 @@ tanggalInput.value = new Date().toISOString().slice(0, 10);
 // LOAD ANGGOTA
 // =======================
 function loadAnggota() {
- db.collection("anggota")
-  .where("aktif", "==", true)
-  .orderBy("nama")
-  .onSnapshot(snapshot => {
-
+function loadAnggota() {
+  db.collection("anggota")
+    .onSnapshot(snapshot => {
       list.innerHTML = "";
 
-      if (snapshot.empty) {
+      let data = [];
+
+      snapshot.forEach(doc => {
+        const d = doc.data();
+        if (d.aktif === true) {
+          data.push({
+            id: doc.id,
+            nama: d.nama
+          });
+        }
+      });
+
+      // 🔤 URUTKAN A–Z
+      data.sort((a, b) => a.nama.localeCompare(b.nama));
+
+      if (data.length === 0) {
         list.innerHTML = `
           <tr>
             <td colspan="2">Belum ada anggota</td>
@@ -23,22 +36,24 @@ function loadAnggota() {
         return;
       }
 
-      snapshot.forEach(doc => {
-        const id = doc.id;
-        const nama = doc.data().nama;
-
+      data.forEach(a => {
         list.innerHTML += `
           <tr>
-            <td>${nama}</td>
+            <td>${a.nama}</td>
             <td>
               <input
                 type="checkbox"
-                id="cb-${id}"
-                onchange="simpanOtomatis('${id}', this.checked)">
+                id="cb-${a.id}"
+                onchange="simpanOtomatis('${a.id}', this.checked)">
             </td>
           </tr>
         `;
       });
+
+      loadAbsenTanggal(tanggalInput.value);
+    });
+}
+
 
       loadAbsenTanggal(tanggalInput.value);
     });
