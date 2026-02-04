@@ -1,4 +1,6 @@
-/* RESET DASAR */
+/* =========================
+   RESET & GLOBAL
+========================= */
 * {
   box-sizing: border-box;
   margin: 0;
@@ -12,23 +14,29 @@ body {
   padding: 16px;
 }
 
-/* JUDUL */
+/* =========================
+   JUDUL
+========================= */
 h1, h2 {
   text-align: center;
   margin-bottom: 16px;
 }
 
-/* CONTAINER */
+/* =========================
+   CONTAINER
+========================= */
 .container {
   max-width: 480px;
   margin: auto;
-  background: #ffffff;
+  background: #fff;
   padding: 16px;
-  border-radius: 8px;
+  border-radius: 10px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.1);
 }
 
-/* INPUT */
+/* =========================
+   FORM & INPUT
+========================= */
 input, select, button {
   width: 100%;
   padding: 10px;
@@ -41,10 +49,12 @@ input, select {
   border-radius: 6px;
 }
 
-/* BUTTON */
+/* =========================
+   BUTTON
+========================= */
 button {
   background: #2d6cdf;
-  color: white;
+  color: #fff;
   border: none;
   border-radius: 6px;
   cursor: pointer;
@@ -54,49 +64,27 @@ button:hover {
   background: #1f56b8;
 }
 
-/* DASHBOARD MENU */
-.menu {
-  display: grid;
-  grid-template-columns: 1fr;
-  gap: 12px;
+.logout {
+  background: #dc3545;
 }
 
-.menu a {
-  text-decoration: none;
-  background: #2d6cdf;
-  color: white;
-  padding: 14px;
-  text-align: center;
-  border-radius: 8px;
-  font-weight: bold;
+.logout:hover {
+  background: #b02a37;
 }
 
-.menu a:hover {
-  background: #1f56b8;
-}
-
-/* LIST ANGGOTA */
+/* =========================
+   SCROLL AREA
+========================= */
 .list {
   max-height: 60vh;
   overflow-y: auto;
   border: 1px solid #ddd;
-  padding: 10px;
   border-radius: 6px;
 }
 
-.item {
-  display: flex;
-  align-items: center;
-  justify-content: space-between;
-  margin-bottom: 8px;
-}
-
-.item label {
-  flex: 1;
-  margin-left: 8px;
-}
-
-/* TABLE REKAP */
+/* =========================
+   TABLE (UMUM)
+========================= */
 table {
   width: 100%;
   border-collapse: collapse;
@@ -105,12 +93,13 @@ table {
 
 th, td {
   border: 1px solid #ddd;
-  padding: 8px;
+  padding: 10px;
   font-size: 14px;
 }
 
 th {
-  background: #f0f0f0;
+  background: #f2f2f2;
+  text-align: left;
 }
 
 .full {
@@ -118,139 +107,46 @@ th {
   font-weight: bold;
 }
 
-/* LOGOUT */
-.logout {
-  background: #dc3545;
-  margin-top: 12px;
-}
-
-.logout:hover {
-  background: #b02a37;
-}
-
-/* RESPONSIVE */
-@media (min-width: 600px) {
-  .menu {
-    grid-template-columns: repeat(3, 1fr);
-  }
-}
-
-/* TABEL ABSEN */
-.absen-table {
-  width: 100%;
-  border-collapse: collapse;
-}
-
-.absen-table th,
-.absen-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  font-size: 15px;
-}
-
-.absen-table th {
-  background: #f2f2f2;
-  text-align: left;
-}
-
+/* =========================
+   TABEL ABSEN
+========================= */
 .absen-table th:last-child,
 .absen-table td:last-child {
+  width: 70px;
   text-align: center;
-  width: 80px;
 }
 
 .absen-table input[type="checkbox"] {
   transform: scale(1.3);
   cursor: pointer;
 }
-/* TABEL ANGGOTA */
-.anggota-table {
-  width: 100%;
-  border-collapse: collapse;
-}
 
-.anggota-table th,
-.anggota-table td {
-  border: 1px solid #ddd;
-  padding: 10px;
-  font-size: 15px;
-}
-
-.anggota-table th {
-  background: #f2f2f2;
-  text-align: left;
-}
-
+/* =========================
+   TABEL ANGGOTA
+========================= */
 .anggota-table td:last-child {
+  width: 70px;
   text-align: center;
-  width: 120px;
+}
+
+.aksi {
+  display: flex;
+  justify-content: center;
+  gap: 4px;
 }
 
 .aksi button {
-  margin: 0 2px;
-  padding: 6px 8px;
+  background: transparent;
+  border: none;
+  padding: 4px;
   font-size: 16px;
+  line-height: 1;
   cursor: pointer;
 }
 
-/* ===== MOBILE FIX (HP) ===== */
-@media (max-width: 600px) {
-
-  /* Container lebih rapat */
-  .container {
-    padding: 12px;
-  }
-
-  /* Tabel full width & tidak overflow */
-  .anggota-table,
-  .absen-table {
-    width: 100%;
-    font-size: 14px;
-  }
-
-  /* Header tetap terlihat */
-  .anggota-table thead,
-  .absen-table thead {
-    position: sticky;
-    top: 0;
-    background: #f2f2f2;
-    z-index: 2;
-  }
-
-  /* Kolom aksi dipersempit */
-  .anggota-table td:last-child {
-    width: 90px;
-    white-space: nowrap;
-  }
-
-  /* Tombol aksi berjajar rapi */
-  .aksi {
-    display: flex;
-    justify-content: center;
-    gap: 6px;
-  }
-
-  .aksi button {
-    padding: 6px;
-    font-size: 18px;
-    min-width: 40px;
-    min-height: 40px;
-  }
-
-  /* Checkbox absen lebih besar */
-  .absen-table input[type="checkbox"] {
-    transform: scale(1.5);
-  }
-
-  /* Tinggi list bisa discroll */
-  .list {
-    max-height: 65vh;
-    overflow-y: auto;
-  }
-
-}
-
-/* ===== DASHBOARD MENU MODERN ===== */
+/* =========================
+   DASHBOARD MENU MODERN
+========================= */
 .dashboard-menu {
   display: grid;
   grid-template-columns: 1fr;
@@ -265,7 +161,7 @@ th {
   padding: 16px;
   border-radius: 12px;
   background: linear-gradient(135deg, #2d6cdf, #4f83ff);
-  color: white;
+  color: #fff;
   text-decoration: none;
   box-shadow: 0 4px 10px rgba(0,0,0,0.15);
   transition: transform 0.15s ease, box-shadow 0.15s ease;
@@ -286,12 +182,57 @@ th {
 }
 
 .menu-card .text p {
-  margin: 4px 0 0;
+  margin-top: 4px;
   font-size: 14px;
   opacity: 0.9;
 }
 
-/* DESKTOP */
+/* =========================
+   MOBILE OPTIMIZATION
+========================= */
+@media (max-width: 600px) {
+
+  body {
+    padding: 12px;
+  }
+
+  .container {
+    padding: 12px;
+  }
+
+  /* table font lebih kecil */
+  th, td {
+    font-size: 13px;
+    padding: 8px;
+  }
+
+  /* sticky header tabel */
+  thead {
+    position: sticky;
+    top: 0;
+    z-index: 2;
+  }
+
+  /* kolom aksi super ramping */
+  .anggota-table td:last-child {
+    width: 56px;
+  }
+
+  .aksi button {
+    font-size: 14px;
+    padding: 6px;
+    min-width: 28px;
+    min-height: 28px;
+  }
+
+  .absen-table input[type="checkbox"] {
+    transform: scale(1.4);
+  }
+}
+
+/* =========================
+   DESKTOP
+========================= */
 @media (min-width: 700px) {
   .dashboard-menu {
     grid-template-columns: repeat(3, 1fr);
