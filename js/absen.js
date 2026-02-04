@@ -5,9 +5,8 @@ const tanggalInput = document.getElementById("tanggal");
 tanggalInput.value = new Date().toISOString().slice(0, 10);
 
 // =======================
-// LOAD ANGGOTA
+// LOAD ANGGOTA (URUT A–Z)
 // =======================
-function loadAnggota() {
 function loadAnggota() {
   db.collection("anggota")
     .onSnapshot(snapshot => {
@@ -25,7 +24,7 @@ function loadAnggota() {
         }
       });
 
-      // 🔤 URUTKAN A–Z
+      // 🔤 urutkan nama A–Z
       data.sort((a, b) => a.nama.localeCompare(b.nama));
 
       if (data.length === 0) {
@@ -50,12 +49,10 @@ function loadAnggota() {
         `;
       });
 
+      // load absen sesuai tanggal aktif
       loadAbsenTanggal(tanggalInput.value);
-    });
-}
-
-
-      loadAbsenTanggal(tanggalInput.value);
+    }, err => {
+      alert("Gagal load anggota: " + err.message);
     });
 }
 
@@ -79,6 +76,9 @@ function loadAbsenTanggal(tanggal) {
         const cb = document.getElementById(`cb-${id}`);
         if (cb) cb.checked = status === true;
       });
+    })
+    .catch(err => {
+      alert("Gagal load absen: " + err.message);
     });
 }
 
@@ -115,5 +115,7 @@ tanggalInput.addEventListener("change", e => {
   loadAbsenTanggal(e.target.value);
 });
 
-// init
+// =======================
+// INIT
+// =======================
 loadAnggota();
