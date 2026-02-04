@@ -3,13 +3,25 @@ const namaBaru = document.getElementById("namaBaru");
 
 // load anggota
 db.collection("anggota")
-  .where("aktif", "==", true)
-  .orderBy("nama")
   .onSnapshot(snapshot => {
-
     list.innerHTML = "";
 
-    if (snapshot.empty) {
+    let data = [];
+
+    snapshot.forEach(doc => {
+      const d = doc.data();
+      if (d.aktif === true) {
+        data.push({
+          id: doc.id,
+          nama: d.nama
+        });
+      }
+    });
+
+    // 🔤 URUTKAN A–Z
+    data.sort((a, b) => a.nama.localeCompare(b.nama));
+
+    if (data.length === 0) {
       list.innerHTML = `
         <tr>
           <td colspan="2">Belum ada anggota</td>
@@ -17,25 +29,20 @@ db.collection("anggota")
       return;
     }
 
-    snapshot.forEach(doc => {
-      const id = doc.id;
-      const nama = doc.data().nama;
-
+    data.forEach(a => {
       list.innerHTML += `
         <tr>
-          <td>
-            <span id="text-${id}">${nama}</span>
-            <input id="input-${id}" value="${nama}" style="display:none;width:100%">
-          </td>
+          <td>${a.nama}</td>
           <td class="aksi">
-            <button onclick="edit('${id}')">✏️</button>
-            <button onclick="simpan('${id}')">💾</button>
-            <button onclick="hapus('${id}')">🗑️</button>
+            <button onclick="edit('${a.id}')">✏️</button>
+            <button onclick="simpan('${a.id}')">💾</button>
+            <button onclick="hapus('${a.id}')">🗑️</button>
           </td>
         </tr>
       `;
     });
   });
+
 
 // tambah anggota
 function tambah() {
