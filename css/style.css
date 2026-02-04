@@ -112,7 +112,7 @@ th {
 ========================= */
 .absen-table th:last-child,
 .absen-table td:last-child {
-  width: 70px;
+  width: 64px;
   text-align: center;
 }
 
@@ -122,26 +122,47 @@ th {
 }
 
 /* =========================
-   TABEL ANGGOTA
+   TABEL ANGGOTA - AKSI
 ========================= */
 .anggota-table td:last-child {
-  width: 70px;
+  width: 64px;
   text-align: center;
 }
 
+/* container tombol aksi */
 .aksi {
   display: flex;
   justify-content: center;
+  align-items: center;
   gap: 4px;
+  flex-wrap: wrap; /* 🔥 boleh turun ke bawah */
 }
 
+/* tombol aksi (DEFAULT: HP & DESKTOP) */
 .aksi button {
-  background: transparent;
+  background: #2d6cdf;
+  color: #fff;
   border: none;
-  padding: 4px;
-  font-size: 16px;
+  border-radius: 6px;
+  padding: 6px;
+  font-size: 14px;
   line-height: 1;
   cursor: pointer;
+  min-width: 30px;
+  min-height: 30px;
+}
+
+/* tombol hapus merah */
+.aksi button:last-child {
+  background: #dc3545;
+}
+
+.aksi button:last-child:hover {
+  background: #b02a37;
+}
+
+.aksi button:hover {
+  background: #1f56b8;
 }
 
 /* =========================
@@ -200,13 +221,11 @@ th {
     padding: 12px;
   }
 
-  /* table font lebih kecil */
   th, td {
     font-size: 13px;
     padding: 8px;
   }
 
-  /* sticky header tabel */
   thead {
     position: sticky;
     top: 0;
@@ -216,10 +235,11 @@ th {
   /* kolom aksi super ramping */
   .anggota-table td:last-child {
     width: 56px;
+    padding: 4px;
   }
 
   .aksi button {
-    font-size: 14px;
+    font-size: 13px;
     padding: 6px;
     min-width: 28px;
     min-height: 28px;
@@ -234,6 +254,7 @@ th {
    DESKTOP
 ========================= */
 @media (min-width: 700px) {
+
   .dashboard-menu {
     grid-template-columns: repeat(3, 1fr);
   }
@@ -245,5 +266,21 @@ th {
 
   .menu-card .icon {
     font-size: 44px;
+  }
+
+  /* desktop: tombol aksi sejajar */
+  .aksi {
+    flex-wrap: nowrap;
+  }
+
+  .aksi button {
+    font-size: 15px;
+    padding: 6px 10px;
+    min-width: auto;
+    min-height: auto;
+  }
+
+  .anggota-table td:last-child {
+    width: 80px;
   }
 }
