@@ -52,7 +52,10 @@ async function loadRekap() {
 
   rekapBody.innerHTML = "";
 
-  Object.values(anggota).forEach(a => {
+  Object.values(anggota)
+  .sort((a, b) => a.nama.localeCompare(b.nama))
+  .forEach(a => {
+
     const full = totalHari > 0 && a.hadir === totalHari;
     rekapBody.innerHTML += `
       <tr class="${full ? "full" : ""}">
