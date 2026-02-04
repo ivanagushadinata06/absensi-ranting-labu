@@ -4,7 +4,9 @@ const namaBaru = document.getElementById("namaBaru");
 // load anggota
 db.collection("anggota")
   .where("aktif", "==", true)
+  .orderBy("nama")
   .onSnapshot(snapshot => {
+
     list.innerHTML = "";
 
     if (snapshot.empty) {
